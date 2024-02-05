@@ -4,7 +4,7 @@ const app = express()
 const dotenv= require('dotenv')
 dotenv.config()
 
-if ( process.env.NODE_ENV === 'development') {
+if ( process.env.NODE_DEV === 'development') {
    app.use(morgan('dev'))
 }
 // Accept json
@@ -14,6 +14,11 @@ app.get('/home', (req, res) => {
     return res.json({ msg: "Hello raj"})
 })
 
-app.listen(5000, () => {
-    console.log("server is running on port 5000")
+app.use('*', (req, res) => {
+    res.status(404).json({ msg: 'Not Found' })
+})
+
+const port = process.env.PORT || 5100
+app.listen(port, () => {
+    console.log(` Server is running on PORT ${port}...`)
 })
