@@ -18,6 +18,9 @@ app.use('*', (req, res) => {
     res.status(404).json({ msg: 'Not Found' })
 })
 
+app.use((err, req, res, next) => {
+    res.status(500).json({ msg: 'something went wrong'})
+})
 const port = process.env.PORT || 5100
 app.listen(port, () => {
     console.log(` Server is running on PORT ${port}...`)
