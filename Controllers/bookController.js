@@ -14,5 +14,5 @@ export const deleteBook = async (req, res ) => {
 }
 
 export const getBook = async (req, res ) => {
-
+    const { id } = req.params
 }
