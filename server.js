@@ -4,11 +4,17 @@ const app = express()
 const dotenv= require('dotenv')
 dotenv.config()
 
+// Routers
+const bookRouter = require('./Routers/bookRouters')
+
+
 if ( process.env.NODE_DEV === 'development') {
    app.use(morgan('dev'))
 }
 // Accept json
 app.use(express.json())
+
+app.use('/api/v1/books', bookRouter )
 
 app.get('/home', (req, res) => {
     return res.json({ msg: "Hello raj"})
