@@ -24,7 +24,7 @@ app.use('*', (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-    res.status(500).json({ msg: 'something went wrong'})
+    res.status(500).json({ message: 'something went wrong'})
 })
 const port = process.env.PORT || 5100
 
