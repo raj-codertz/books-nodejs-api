@@ -15,7 +15,12 @@ export const updateBook = async (req, res ) => {
 }
 
 export const deleteBook = async (req, res ) => {
+    const { id } = req.params
+    const removedJob = await Book.findByIdAndDelete(id)
 
+    if (!removedJob) {
+        return res.status(404).json({ msg: `no book with id: ${id}`})
+    }
 }
 
 export const getBook = async (req, res ) => {
