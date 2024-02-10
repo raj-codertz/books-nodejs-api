@@ -1,3 +1,4 @@
+import 'express-async-errors'
 import morgan from "morgan"
 import express from "express"
 const app = express()
@@ -17,10 +18,6 @@ if ( process.env.NODE_DEV === 'development') {
 app.use(express.json())
 
 app.use('/api/v1/books' , bookRouter )
-
-app.get('/home', (req, res) => {
-    return res.json({ msg: "Hello raj"})
-})
 
 app.use('*', (req, res) => {
     res.status(404).json({ msg: 'Not Found' })
