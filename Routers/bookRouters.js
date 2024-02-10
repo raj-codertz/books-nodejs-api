@@ -1,13 +1,14 @@
-import { Router } from "express";
+import { Router } from "express"
 const router = Router()
-
 import {
-    getBooks,
     getBook,
+    getBooks,
+    createBook,
     updateBook,
-    deleteBook,
-    createBook
-} from '../Controllers/bookController'
+    deleteBook
+} from "../Controllers/bookController.js"
 
 router.route('/').get(getBooks).post(createBook)
 router.route('/:id').patch(updateBook).get(getBook).delete(deleteBook)
+
+export default router

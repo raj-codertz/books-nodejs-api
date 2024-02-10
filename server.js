@@ -1,11 +1,12 @@
-const morgan = require('morgan')
-const express = require('express')
+import morgan from "morgan"
+import express from "express"
 const app = express()
-const dotenv= require('dotenv')
+import dotenv from 'dotenv'
 dotenv.config()
+import { connectDB } from "./Config/Db.js"
 
 // Routers
-const bookRouter = require('./Routers/bookRouters')
+import bookRouter from "./Routers/bookRouters.js"
 
 
 if ( process.env.NODE_DEV === 'development') {
@@ -29,6 +30,7 @@ app.use((err, req, res, next) => {
     res.status(500).json({ msg: 'something went wrong'})
 })
 const port = process.env.PORT || 5100
-app.listen(port, () => {
+
+connectDB().then(r => app.listen(port, () => {
     console.log(` Server is running on PORT ${port}...`)
-})
+}) )
