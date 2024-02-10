@@ -1,6 +1,7 @@
 import Book from '../Models/bookModel.js'
 export const getBooks = async (req, res ) => {
-    res.status(200).json({ msg: 'success'})
+    const books = await Book.find({})
+    res.status(200).json({ books })
 }
 export const createBook = async (req, res ) => {
      const { title, author } = req.body
@@ -19,4 +20,7 @@ export const deleteBook = async (req, res ) => {
 
 export const getBook = async (req, res ) => {
     const { id } = req.params
+
+    const book = await Book.findById(id);
+
 }
