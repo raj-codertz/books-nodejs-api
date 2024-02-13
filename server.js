@@ -1,5 +1,6 @@
 import 'express-async-errors'
 import morgan from "morgan"
+import { errorHandlerMiddleware } from './Middleware/erroHandlerMiddleware.js'
 import express from "express"
 const app = express()
 import dotenv from 'dotenv'
@@ -23,9 +24,7 @@ app.use('*', (req, res) => {
     res.status(404).json({ msg: 'Not Found' })
 })
 
-app.use((err, req, res, next) => {
-    res.status(500).json({ message: 'something went wrong'})
-})
+app.use( errorHandlerMiddleware )
 const port = process.env.PORT || 5100
 
 connectDB().then(r => app.listen(port, () => {
