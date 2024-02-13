@@ -1,4 +1,7 @@
 import Book from '../Models/bookModel.js'
+import { NotFoundError } from "../Errors/customErrors.js";
+
+
 export const getBooks = async (req, res ) => {
     const books = await Book.find({})
     res.status(200).json({ books })
@@ -15,9 +18,14 @@ export const updateBook = async (req, res ) => {
     const updatedBook = await Book.findByIdAndUpdate(id, req.body, {
         new: true
     })
+<<<<<<< HEAD
     if (!updatedBook ) {
         return res.status(400).json({ msg: `no book with id: ${id }`})
     }
+=======
+    if (!updatedBook ) throw new NotFoundError(`no job with id: ${id}`);
+
+>>>>>>> bbeb39d (create custom error)
     res.status(200).json({ updatedBook })
 }
 
