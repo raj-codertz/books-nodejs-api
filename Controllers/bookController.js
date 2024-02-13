@@ -1,16 +1,17 @@
 import Book from '../Models/bookModel.js'
 import { NotFoundError } from "../Errors/customErrors.js";
+import {StatusCodes } from "http-status-codes";
 
 
 export const getBooks = async (req, res ) => {
     const books = await Book.find({})
-    res.status(200).json({ books })
+    res.status(StatusCodes.OK).json({ books })
 }
 export const createBook = async (req, res ) => {
      const { title, author } = req.body
 
      const book = await Book.create({title,author});
-     res.status(201).json({ book })
+     res.status(StatusCodes.CREATED).json({ book })
 }
 
 export const updateBook = async (req, res ) => {
@@ -19,12 +20,9 @@ export const updateBook = async (req, res ) => {
         new: true
     })
 
-    if (!updatedBook ) {
-        return res.status(400).json({ msg: `no book with id: ${id }`})
-    }
     if (!updatedBook ) throw new NotFoundError(`no job with id: ${id}`);
 
-    res.status(200).json({ updatedBook })
+    res.status(StatusCodes.OK).json({ updatedBook })
 }
 
 export const deleteBook = async (req, res ) => {
@@ -34,7 +32,7 @@ export const deleteBook = async (req, res ) => {
     if (!removedJob) {
         return res.status(404).json({ msg: `no book with id: ${id}`})
     }
-    res.status(200).json({ removedJob })
+    res.status(StatusCodes.OK).json({ removedJob })
 }
 
 export const getBook = async (req, res ) => {
@@ -44,6 +42,6 @@ export const getBook = async (req, res ) => {
     if (!book) {
         return res.status(404).json({ msg: `no book with id: ${id} `})
     }
-    res.status(200).json({ book })
+    res.status(StatusCodes.OK).json({ book })
 
 }
