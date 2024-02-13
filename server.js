@@ -1,6 +1,6 @@
 import 'express-async-errors'
 import morgan from "morgan"
-import { errorHandlerMiddleware } from './Middleware/erroHandlerMiddleware.js'
+import errorHandlerMiddleware  from './Middleware/erroHandlerMiddleware.js'
 import express from "express"
 const app = express()
 import dotenv from 'dotenv'
@@ -11,7 +11,7 @@ import { connectDB } from "./Config/Db.js"
 import bookRouter from "./Routers/bookRouters.js"
 
 
-if ( process.env.NODE_DEV === 'development') {
+if ( process.env.NODE_ENV === 'development') {
    app.use(morgan('dev'))
 }
 
