@@ -10,7 +10,7 @@ export const getBooks = async (req, res ) => {
 export const createBook = async (req, res ) => {
      const { title, author } = req.body
 
-     const book = await Book.create({title,author});
+     const book = await Book.create({ title,author });
      res.status(StatusCodes.CREATED).json({ book })
 }
 

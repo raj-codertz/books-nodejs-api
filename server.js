@@ -20,6 +20,10 @@ app.use(express.json())
 
 app.use('/api/v1/books' , bookRouter )
 
+app.post('api/v1/test', (req, res) => {
+    const { name } = req.body;
+    res.json({ msg: `Hello ${name}`})
+})
 app.use('*', (req, res) => {
     res.status(404).json({ msg: 'Not Found' })
 })
