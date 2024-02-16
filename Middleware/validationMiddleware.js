@@ -1,5 +1,6 @@
 import { body, validationResult } from "express-validator";
 import { BadRequestError } from "../Errors/customErrors.js";
+import { BOOK_GENRE } from "../Utils/constants.js";
 
 const withValidationErrors = ( validateValues ) => {
 //  use array if you want to return more than one middleware, it's express method
@@ -16,11 +17,8 @@ const withValidationErrors = ( validateValues ) => {
     ]
 }
 
-export const validateTest = withValidationErrors([
-    body('name')
-        .notEmpty()
-        .withMessage('name is required')
-        .isLength({ min: 3, max: 50 })
-        .withMessage('name must be between 3 and 50 characters long')
-        .trim()
+export const validateBookInput = withValidationErrors([
+    body('title').notEmpty().withMessage('title is required'),
+    body('author').notEmpty().withMessage('author is required'),
+    body('genre').isIn(Object.values(BOOK_GENRE)).withMessage('Invalid genre value')
 ])
