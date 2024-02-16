@@ -7,9 +7,9 @@ import {
     updateBook,
     deleteBook
 } from "../Controllers/bookController.js"
-import {validateBookInput} from "../Middleware/validationMiddleware.js";
+import {validateBookInput, validateIdParam} from "../Middleware/validationMiddleware.js";
 
 router.route('/').get(getBooks).post(validateBookInput ,createBook)
-router.route('/:id').patch(updateBook).get(getBook).delete(deleteBook)
+router.route('/:id').patch(validateIdParam,validateBookInput, updateBook).get(validateIdParam,getBook).delete(validateIdParam.deleteBook)
 
 export default router
