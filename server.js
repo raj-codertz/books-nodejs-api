@@ -6,7 +6,6 @@ const app = express()
 import dotenv from 'dotenv'
 dotenv.config()
 import { connectDB } from "./Config/Db.js"
-import { validateTest } from "./Middleware/validationMiddleware.js";
 // Routers
 import bookRouter from "./Routers/bookRouters.js"
 
@@ -18,14 +17,6 @@ if ( process.env.NODE_ENV === 'development') {
 // Accept json
 app.use(express.json())
 
-
-app.post(
-    '/api/v1/books/test',
-    validateTest,
-    (req, res) => {
-    const { name } = req.body;
-    res.json({ msg: `Hello ${name}`})
-})
 
 app.use('/api/v1/books' , bookRouter )
 

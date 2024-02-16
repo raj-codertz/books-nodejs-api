@@ -20,5 +20,7 @@ const withValidationErrors = ( validateValues ) => {
 export const validateBookInput = withValidationErrors([
     body('title').notEmpty().withMessage('title is required'),
     body('author').notEmpty().withMessage('author is required'),
-    body('genre').isIn(Object.values(BOOK_GENRE)).withMessage('Invalid genre value')
+    body('genre')
+        .isIn(Object.values(BOOK_GENRE))
+        .withMessage('Invalid genre value')
 ])
