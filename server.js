@@ -6,8 +6,7 @@ const app = express()
 import dotenv from 'dotenv'
 dotenv.config()
 import { connectDB } from "./Config/Db.js"
-import { body , validationResult } from "express-validator";
-
+import { validateTest } from "./Middleware/validationMiddleware.js";
 // Routers
 import bookRouter from "./Routers/bookRouters.js"
 
@@ -23,14 +22,7 @@ app.use(express.json())
 app.post(
     '/api/v1/books/test',
     [ body('name').notEmpty().withMessage('name is required')],
-    (req, res,next ) => {
-      const errors = validationResult(req)
-      if (!errors.isEmpty()) {
-          const errorMessage = errors.array().map(error => error.msg)
-          return res.status(400).json({ msg: errorMessage})
-      }
-        next();
-    },
+    ,
     (req, res) => {
     const { name } = req.body;
     res.json({ msg: `Hello ${name}`})
