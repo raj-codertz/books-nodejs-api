@@ -1,7 +1,7 @@
 import { body, validationResult, param } from "express-validator";
 import { BadRequestError } from "../Errors/customErrors.js";
 import { BOOK_GENRE } from "../Utils/constants.js";
-import mongoose, {Mongoose} from "mongoose";
+import mongoose from "mongoose";
 
 const withValidationErrors = ( validateValues ) => {
 //  use array if you want to return more than one middleware, it's express method
@@ -11,7 +11,7 @@ const withValidationErrors = ( validateValues ) => {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
                 const errorMessage = errors.array().map(error => error.msg)
-                return res.status(400).json({ msg: errorMessage})
+                throw new BadRequestError(errorMessage)
             }
             next();
         }
@@ -28,6 +28,6 @@ export const validateBookInput = withValidationErrors([
 
 export const validateIdParam = withValidationErrors([
     param('id')
-        .custom( value => Mongoose.Types.ObjectId.isValid(value))
+        .custom( (value) => mongoose.Types.ObjectId.isValid(value))
         .withMessage('Invalid MongoDB Id')
 ])
