@@ -21,8 +21,7 @@ app.use(express.json())
 
 app.post(
     '/api/v1/books/test',
-    [ body('name').notEmpty().withMessage('name is required')],
-    ,
+    validateTest,
     (req, res) => {
     const { name } = req.body;
     res.json({ msg: `Hello ${name}`})
