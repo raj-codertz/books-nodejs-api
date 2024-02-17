@@ -1,4 +1,4 @@
-import { body, validationResult, param } from "express-validator";
+import { body, param,validationResult} from "express-validator";
 import { BadRequestError, NotFoundError } from "../Errors/customErrors.js";
 import { BOOK_GENRE } from "../Utils/constants.js";
 import mongoose from "mongoose";
@@ -8,14 +8,14 @@ const withValidationErrors = ( validateValues ) => {
 //  use array if you want to return more than one middleware, it's express method
     return [
         validateValues,
-        (req, res,next ) => {
+        (req, res, next ) => {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
                 const errorMessage = errors.array().map(error => error.msg)
                 if (errorMessage[0].startsWith('no book')) {
-                    throw new NotFoundError(errorMessage)
+                   throw new NotFoundError(errorMessage)
                 }
-                throw new BadRequestError(errorMessage)
+             throw new BadRequestError(errorMessage)
             }
             next();
         }
