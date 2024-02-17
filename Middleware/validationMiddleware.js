@@ -1,7 +1,8 @@
 import { body, validationResult, param } from "express-validator";
-import { BadRequestError } from "../Errors/customErrors.js";
+import { BadRequestError, NotFoundError } from "../Errors/customErrors.js";
 import { BOOK_GENRE } from "../Utils/constants.js";
 import mongoose from "mongoose";
+import Book from "../Models/bookModel.js";
 
 const withValidationErrors = ( validateValues ) => {
 //  use array if you want to return more than one middleware, it's express method
@@ -11,6 +12,9 @@ const withValidationErrors = ( validateValues ) => {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
                 const errorMessage = errors.array().map(error => error.msg)
+                if (errorMessage[0].startsWith('no book')) {
+                    throw new NotFoundError(errorMessage)
+                }
                 throw new BadRequestError(errorMessage)
             }
             next();
@@ -28,6 +32,10 @@ export const validateBookInput = withValidationErrors([
 
 export const validateIdParam = withValidationErrors([
     param('id')
-        .custom( (value) => mongoose.Types.ObjectId.isValid(value))
-        .withMessage('Invalid MongoDB Id')
+        .custom( async(value) => {
+         const isValidId =  mongoose.Types.ObjectId.isValid(value)
+         if (!isValidId) throw new Error('Invalid MongoDB Id')
+         const book = await Book.findById(value)
+            if (!book) throw new Error(`no book with id: ${value}`)
+        })
 ])
