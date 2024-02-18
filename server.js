@@ -8,6 +8,7 @@ dotenv.config()
 import { connectDB } from "./Config/Db.js"
 // Routers
 import bookRouter from "./Routers/bookRouters.js"
+import authRouter from "./Routers/authRouters.js"
 
 
 if ( process.env.NODE_ENV === 'development') {
@@ -19,6 +20,7 @@ app.use(express.json())
 
 
 app.use('/api/v1/books' , bookRouter )
+app.use('/api/v1/auth', authRouter)
 
 
 app.use('*', (req, res) => {
