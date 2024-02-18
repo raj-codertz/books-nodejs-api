@@ -3,6 +3,7 @@ import { BadRequestError, NotFoundError } from "../Errors/customErrors.js";
 import { BOOK_GENRE } from "../Utils/constants.js";
 import mongoose from "mongoose";
 import Book from "../Models/bookModel.js";
+import User from "../Models/userModel.js"
 
 const withValidationErrors = ( validateValues ) => {
 //  use array if you want to return more than one middleware, it's express method
@@ -37,5 +38,20 @@ export const validateIdParam = withValidationErrors([
          if (!isValidId) throw new Error('Invalid MongoDB Id')
          const book = await Book.findById(value)
             if (!book) throw new Error(`no book with id: ${value}`)
+        })
+])
+
+export const validateRegisterInput = withValidationErrors([
+    body('name').notEmpty().withMessage('name is required'),
+    body('email')
+        .notEmpty()
+        .withMessage('email is required')
+        .isEmail()
+        .withMessage('invalid email format')
+        .custom( async (email) => {
+            const user = await User.findOne({ email })
+            if ( user ) {
+                throw new Error('email is already exist')
+            }
         })
 ])
