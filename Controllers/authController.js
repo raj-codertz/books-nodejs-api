@@ -1,6 +1,7 @@
 import User from "../Models/userModel.js";
 import {StatusCodes} from "http-status-codes";
-import {hashPassword} from "../Utils/passwordUtils.js";
+import {hashPassword, comparePassword } from "../Utils/passwordUtils.js";
+import {UnauthenticatedError} from "../Errors/customErrors.js";
 export const register = async (req, res ) => {
     const isFirstAccount = (await User.countDocuments()) === 0;
     req.body.role = isFirstAccount ? 'admin' : 'author'
@@ -13,6 +14,16 @@ export const register = async (req, res ) => {
 }
 
 export const login = async (req, res ) => {
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) throw new UnauthenticatedError('Invalid credentials')
+
+    const isPasswordCorrect = await comparePassword(
+        req.body.password,
+        user.password
+    )
+    if ( !isPasswordCorrect ) throw new UnauthenticatedError('Invalid credentials')
+
+    res.send('login route')
 
 }
 
