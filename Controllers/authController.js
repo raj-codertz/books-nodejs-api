@@ -2,6 +2,7 @@ import User from "../Models/userModel.js";
 import {StatusCodes} from "http-status-codes";
 import {hashPassword, comparePassword } from "../Utils/passwordUtils.js";
 import {UnauthenticatedError} from "../Errors/customErrors.js";
+import {createJWT} from "../Utils/tokenUtils.js";
 export const register = async (req, res ) => {
     const isFirstAccount = (await User.countDocuments()) === 0;
     req.body.role = isFirstAccount ? 'admin' : 'author'
@@ -24,8 +25,8 @@ export const login = async (req, res ) => {
     //     user.password
     // )
     // if ( !isPasswordCorrect ) throw new UnauthenticatedError('Invalid credentials')
-
-    res.send('login route')
+    const token = createJWT({ userId: user._id, role: user.role })
+    res.json({ token })
 
 }
 
