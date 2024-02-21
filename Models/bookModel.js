@@ -9,6 +9,10 @@ const bookSchema =new mongoose.Schema(
             type: String,
             enum: Object.values(BOOK_GENRE),
             default: BOOK_GENRE.FINANCE
+        },
+        createdBy: {
+            type: mongoose.Types.ObjectId,
+            ref: 'author'
         }
     },
     { timestamps: true }
