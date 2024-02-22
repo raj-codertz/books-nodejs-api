@@ -4,6 +4,7 @@ import {StatusCodes } from "http-status-codes";
 
 
 export const getBooks = async (req, res ) => {
+    console.log(req)
     const books = await Book.find({})
     res.status(StatusCodes.OK).json({ books })
 }

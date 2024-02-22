@@ -10,12 +10,15 @@ import { connectDB } from "./Config/Db.js"
 import bookRouter from "./Routers/bookRouters.js"
 import authRouter from "./Routers/authRouters.js"
 import {authenticateUser} from "./Middleware/authMiddleware.js";
+import cookieParser from 'cookie-parser'
 
 
 if ( process.env.NODE_ENV === 'development') {
    app.use(morgan('dev'))
 }
 
+
+app.use(cookieParser())
 // Accept json
 app.use(express.json())
 
