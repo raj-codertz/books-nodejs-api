@@ -41,7 +41,7 @@ export const validateIdParam = withValidationErrors([
          if (!isValidId) throw new Error('Invalid MongoDB Id')
          const book = await Book.findById(value)
             if (!book) throw new Error(`no book with id: ${value}`)
-            const isAdmin = req.user.role
+            const isAdmin = req.user.role === 'admin'
             const isOwnwer = req.user.userId === book.createdBy.toString()
             if (!isAdmin && !isOwnwer) throw new Error('not authorized to access this route')
         })
