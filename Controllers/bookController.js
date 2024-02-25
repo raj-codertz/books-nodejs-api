@@ -2,16 +2,14 @@ import Book from '../Models/bookModel.js'
 import { NotFoundError } from "../Errors/customErrors.js";
 import {StatusCodes } from "http-status-codes";
 
-
 export const getBooks = async (req, res ) => {
-    console.log(req.user)
-    const books = await Book.find({})
+    const books = await Book.find({ createdBy: req.user.userId })
     res.status(StatusCodes.OK).json({ books })
 }
 export const createBook = async (req, res ) => {
-     const { title, author } = req.body
-
-     const book = await Book.create({ title,author });
+    // console.log(req.user)
+     req.body.createdBy = req.user.userId
+     const book = await Book.create( req.body );
      res.status(StatusCodes.CREATED).json({ book })
 }
 
