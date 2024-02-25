@@ -1,5 +1,5 @@
 import { body, param,validationResult} from "express-validator";
-import { BadRequestError, NotFoundError } from "../Errors/customErrors.js";
+import {BadRequestError, NotFoundError, UnauthorizedError} from "../Errors/customErrors.js";
 import { BOOK_GENRE } from "../Utils/constants.js";
 import mongoose from "mongoose";
 import Book from "../Models/bookModel.js";
@@ -15,6 +15,9 @@ const withValidationErrors = ( validateValues ) => {
                 const errorMessage = errors.array().map(error => error.msg)
                 if (errorMessage[0].startsWith('no book')) {
                    throw new NotFoundError(errorMessage)
+                }
+                if (errorMessage[0].startsWith('not authorized')) {
+                    throw new UnauthorizedError(errorMessage)
                 }
              throw new BadRequestError(errorMessage)
             }
@@ -33,11 +36,14 @@ export const validateBookInput = withValidationErrors([
 
 export const validateIdParam = withValidationErrors([
     param('id')
-        .custom( async(value) => {
+        .custom( async(value, {req}) => {
          const isValidId =  mongoose.Types.ObjectId.isValid(value)
          if (!isValidId) throw new Error('Invalid MongoDB Id')
          const book = await Book.findById(value)
             if (!book) throw new Error(`no book with id: ${value}`)
+            const isAdmin = req.user.role
+            const isOwnwer = req.user.userId === book.createdBy.toString()
+            if (!isAdmin && !isOwnwer) throw new Error('not authorized to access this route')
         })
 ])
 
