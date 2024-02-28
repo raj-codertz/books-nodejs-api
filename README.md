@@ -25,7 +25,7 @@ This repository contains a ![Node.js](https://img.shields.io/badge/Node.js-33993
 
 ## API Endpoints
 
-### Contact endpoints
+### Books endpoints
 
 - **(GET) `/api/v1/books`:** Retrieve a list of all books.
 - **(GET) `/api/v1/books`:bookId:** Retrieve a specific book by ID.
@@ -53,7 +53,7 @@ Follow these instructions to set up the project on your local machine for develo
 
 1. Clone the repository to your local machine.
    ```bash
-   git clone https://github.com/Alexandrbig1/nodejs-rest-api-homework.git
+   https://github.com/raj-codertz/books-nodejs-api.git
    ```
 1. Install dependencies.
    ```bash
