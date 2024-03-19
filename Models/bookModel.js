@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { BOOK_GENRE } from "../Utils/constants.js";
 
+// This is Book model
 const bookSchema =new mongoose.Schema(
     {
         title:String,

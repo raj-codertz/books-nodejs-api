@@ -31,7 +31,9 @@ This repository contains a ![Node.js](https://img.shields.io/badge/Node.js-33993
 - **(GET) `/api/v1/books`:bookId:** Retrieve a specific book by ID.
 - **(POST) `/api/v1/books`:** Add a new book to the list.
 - **(PUT) `/api/v1/books`:bookId:** Update an existing book's information.
-- **(PATCH) `/api/v1/books`:bookId/author:** Partially update an existing book's information.
+- **(PATCH) `/api/v1/books`:bookId/author:** Partially update an existing book's 
+
+information.
 - **(DELETE) `/api/v1/books`:bookId:** Delete an existing book from the list.
 
 ### User endpoints
